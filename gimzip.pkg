@@ -1,0 +1,12 @@
+<GIMZIP description="zbrew sample for testing">
+  <FILEDEF name="/u/ibmuser/zbrew-smpsample/smpmcs/zbrew.mcs"
+           description="mcs file"
+           archid="SMPMCS"
+           type="SMPPTFIN">
+  </FILEDEF>
+  <FILEDEF name="/u/ibmuser/zbrew-smpsample/smprelfile/hw"
+           archid="F1"
+           description="hw file"
+           type="SMPRELF">
+  </FILEDEF>
+</GIMZIP>

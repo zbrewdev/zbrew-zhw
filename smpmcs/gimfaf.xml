@@ -1,0 +1,17 @@
+<?xml version="1.0" ?>                                                         
+<FILELIST>                                                                     
+<FILEATTR                                                                      
+name="zbrew.mcs"                             
+level="01.01.00.01"                                                            
+type="SMPPTFIN"                                                                
+dsorg="PS"                                                                     
+recfm="FB"                                                                     
+lrecl="80"                                                                     
+blksize="27920"                                                                
+allocunits="RECORD"                                                            
+length="27920"                                                                 
+avgrec="U"                                                                     
+secondary="1"                                                                  
+primary="1">                                                                   
+</FILEATTR>                                                                    
+</FILELIST>                                                                    

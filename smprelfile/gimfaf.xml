@@ -1,0 +1,10 @@
+<?xml version="1.0" ?>                                                         
+<FILELIST>                                                                     
+<FILEATTR                                                                      
+name="hw"                                 
+level="01.01.00.01"                                                            
+type="SMPRELF"                                                                 
+dsntype="FILE"                                                              
+dsorg="UFS">
+</FILEATTR>                                                                    
+</FILELIST>                                                                    

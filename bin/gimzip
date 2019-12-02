@@ -1,0 +1,12 @@
+#!/bin/sh
+set -x
+. zbrewfuncs
+setjavaenv
+
+zipdir=${TMP}/$$.gimzip
+mkdir ${zipdir}
+
+mydir=$(callerdir ${0})
+mvscmdauth --pgm=gimzip --smpdir="${zipdir}" --smpwkdir="${TMP}" --smpcpath="${SMPE_CLASSPATH}" --smpjhome="${SMPE_JAVAHOME}" --SYSUT2=DUMMY --SYSUT3=DUMMY --SYSUT4=DUMMY --smpout=stdout --sysprint=stdout --sysin=stdin 
+
+

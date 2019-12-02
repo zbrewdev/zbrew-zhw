@@ -4,9 +4,9 @@
            archid="SMPMCS"
            type="SMPPTFIN">
   </FILEDEF>
-  <FILEDEF name="/u/ibmuser/zbrew-smpsample/smprelfile/hw"
-           archid="F1"
+  <FILEDEF name="ZBREW.SMPRELF.HW.REXX"
            description="hw file"
+           archid="F1"
            type="SMPRELF">
   </FILEDEF>
 </GIMZIP>

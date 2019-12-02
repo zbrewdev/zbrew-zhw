@@ -3,7 +3,14 @@
 <FILEATTR                                                                      
 name="hw"                                 
 level="01.01.00.01"                                                            
-type="SMPRELF"                                                                 
+dsorg="PS"
+recfm="FB"
+lrecl="80"
+blksize="6160"
+allocunits="RECORD"
+length="6160"
+avgrec="U"
+primary="1">
 dsntype="FILE"                                                              
 dsorg="UFS">
 </FILEATTR>                                                                    

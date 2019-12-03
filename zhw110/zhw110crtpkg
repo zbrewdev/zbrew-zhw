@@ -60,7 +60,7 @@ hfssmprelf=`a2e ${mydir}/smprelf/hw.rexx`
 hfssmpmcs=`a2e ${mydir}/smpmcs/zhw110.mcs`
 hfssmphld=`a2e ${mydir}/smphold/zhw110.hold`
 
-dcp "${hfssmprelf}" "${smppdsf}(F1)"
+dcp "${hfssmprelf}" "${smppdsf}(HW)"
 out=`mvscmd --pgm=iebcopy --dd1=${smppdsf} --dd2=${smprelf} --sysprint=stdout --sysin=stdin <<zzz
   COPY INDD=DD1,OUTDD=DD2
 zzz`

@@ -25,9 +25,10 @@ NTS="$1"
 sysin=${TMP}/$$.gimzip.sysin
 mydir=$(callerdir ${0})
 hlq=`hlq`
-smpmcs="${hlq}.SMPSAMP.SMPMCS.ZBREW.MCS"
-smppdsf="${hlq}.SMPSAMP.SMPRELF.CODE.PDS"
-smprelf="${hlq}.SMPSAMP.SMPRELF.CODE.F1"
+smpmcs="${hlq}.ZHW001.SMPMCS.MCS"
+smphld="${hlq}.ZHW001.SMPHOLD.HOLD"
+smppdsf="${hlq}.ZHW001.SMPRELF.CODE.PDS"
+smprelf="${hlq}.ZHW001.SMPRELF.CODE.F1"
 
 echo "
 <GIMZIP description=\"zbrew sample for testing\">
@@ -35,6 +36,11 @@ echo "
            description=\"mcs file\"
            archid=\"SMPMCS\"
            type=\"SMPPTFIN\">
+  </FILEDEF>
+  <FILEDEF name=\"${smphld}\"
+           description=\"hold file\"
+           archid=\"SMPHOLD\"
+           type=\"SMPHOLD\">
   </FILEDEF>
   <FILEDEF name=\"${smprelf}\"
            description=\"hw file\"
@@ -44,13 +50,15 @@ echo "
 </GIMZIP>
 " >${sysin}
 
-drm -f "${smprelf}" "${smpmcs}"
+drm -f "${smprelf}" "${smpmcs}" "${smphld}"
 dtouch -tpds "${smppdsf}"
 dtouch -tseq "${smprelf}"
 dtouch -tseq "${smpmcs}"
+dtouch -tseq "${smphld}"
 
 hfssmprelf=`a2e ${mydir}/smprelf/hw.rexx`
-hfssmpmcs=`a2e ${mydir}/smpmcs/zbrew.mcs`
+hfssmpmcs=`a2e ${mydir}/smpmcs/zhw110.mcs`
+hfssmphld=`a2e ${mydir}/smphold/zhw110.hold`
 
 dcp "${hfssmprelf}" "${smppdsf}(HW)"
 out=`mvscmd --pgm=iebcopy --dd1=${smppdsf} --dd2=${smprelf} --sysprint=stdout --sysin=stdin <<zzz
@@ -64,6 +72,7 @@ if [ $rc -gt 0 ]; then
 fi
 
 dcp "${hfssmpmcs}" "${smpmcs}"
+dcp "${hfssmphld}" "${smphld}"
 
 sysut2=`mvstmp ${hlq}`
 sysut3=`mvstmp ${hlq}`
@@ -80,7 +89,7 @@ if [ $rc -gt 0 ]; then
 	echo "${out}" >&2
 	exit $rc
 fi
-rm ${hfssmprelf} ${hfssmpmcs} ${sysin}
-drm ${smppdsf} ${smprelf} ${smpmcs} ${sysut2} ${sysut3} ${sysut4}
+rm ${hfssmprelf} ${hfssmpmcs} ${hfssmphld} ${sysin}
+drm ${smppdsf} ${smprelf} ${smpmcs} ${smphld} ${sysut2} ${sysut3} ${sysut4}
 
 exit $rc

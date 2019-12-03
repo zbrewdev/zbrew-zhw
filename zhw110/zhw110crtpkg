@@ -16,8 +16,11 @@ a2e() {
 	return $?
 }
 
-zipdir=${TMP}/$$.gimzip.zipdir
-mkdir ${zipdir}
+if [ $# -ne 1 ]; then
+	echo "Expected exactly one parameter to be specified - the NTS directory" >&2
+	exit 16
+fi
+NTS="$1"
 
 sysin=${TMP}/$$.gimzip.sysin
 mydir=$(callerdir ${0})
@@ -46,8 +49,8 @@ dtouch -tpds "${smppdsf}"
 dtouch -tseq "${smprelf}"
 dtouch -tseq "${smpmcs}"
 
-hfssmprelf=`a2e ${mydir}/../smprelf/hw.rexx`
-hfssmpmcs=`a2e ${mydir}/../smpmcs/zbrew.mcs`
+hfssmprelf=`a2e ${mydir}/smprelf/hw.rexx`
+hfssmpmcs=`a2e ${mydir}/smpmcs/zbrew.mcs`
 
 dcp "${hfssmprelf}" "${smppdsf}(HW)"
 out=`mvscmd --pgm=iebcopy --dd1=${smppdsf} --dd2=${smprelf} --sysprint=stdout --sysin=stdin <<zzz
@@ -69,15 +72,13 @@ dtouch -tseq ${sysut2}
 dtouch -tseq ${sysut3}
 dtouch -tseq ${sysut4}
 
-out=`mvscmdauth --pgm=gimzip --smpdir="${zipdir}" --smpwkdir="${TMP}" --smpcpath="${SMPE_CLASSPATH}" --smpjhome="${SMPE_JAVAHOME}" --SYSUT2=${sysut2} --SYSUT3=${sysut3} --SYSUT4=${sysut4} --smpout=stdout --sysprint=stdout --sysin=${sysin}`
+out=`mvscmdauth --pgm=gimzip --smpdir="${NTS}" --smpwkdir="${TMP}" --smpcpath="${SMPE_CLASSPATH}" --smpjhome="${SMPE_JAVAHOME}" --SYSUT2=${sysut2} --SYSUT3=${sysut3} --SYSUT4=${sysut4} --smpout=stdout --sysprint=stdout --sysin=${sysin}`
 rc=$?
 
 if [ $rc -gt 0 ]; then 
 	echo "GIMZIP processing failed." >&2
 	echo "${out}" >&2
 	exit $rc
-else
-	echo "${zipdir} GIMZIP directory created."
 fi
 rm ${hfssmprelf} ${hfssmpmcs} ${sysin}
 drm ${smppdsf} ${smprelf} ${smpmcs} ${sysut2} ${sysut3} ${sysut4}

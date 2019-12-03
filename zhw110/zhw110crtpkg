@@ -25,10 +25,10 @@ NTS="$1"
 sysin=${TMP}/$$.gimzip.sysin
 mydir=$(callerdir ${0})
 hlq=`hlq`
-smpmcs="${hlq}.ZHW001.SMPMCS.MCS"
-smphld="${hlq}.ZHW001.SMPHOLD.HOLD"
-smppdsf="${hlq}.ZHW001.SMPRELF.CODE.PDS"
-smprelf="${hlq}.ZHW001.SMPRELF.CODE.F1"
+smpmcs="${hlq}.ZHW110.SMPMCS.MCS"
+smphld="${hlq}.ZHW110.SMPHOLD.HOLD"
+smppdsf="${hlq}.ZHW110.SMPRELF.CODE.PDS"
+smprelf="${hlq}.ZHW110.SMPRELF.CODE.F1"
 
 echo "
 <GIMZIP description=\"zbrew sample for testing\">

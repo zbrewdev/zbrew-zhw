@@ -35,8 +35,6 @@ distsmpcntl=\
       UNIT(SYSALLDA)
       WAITFORDSN
       SHR.
-      WAITFORDSN
-      SHR.
  ENDUCL."
 
 	mvscmdauth --pgm=GIMSMP --smpcsi=${ZBREW_HLQ}ZHW110G.GLOBAL.CSI --smppts=${ZBREW_HLQ}ZHW110G.SMPPTS --smplog='*' --smpout='*' --smprpt='*' --smplist='*' --sysprint='*'  --smpcntl=stdin <<zzz
@@ -60,8 +58,6 @@ if [ $? -gt 0 ]; then
         echo "Internal Error. Unable to find ${props}" >&2
         exit 4
 fi     
-props="${mydir}/igy630install.properties"
-. zbrewprops ${props}
 
 ds="
     	${ZBREW_HLQ}ZHW110.SZHWREXX -s1M

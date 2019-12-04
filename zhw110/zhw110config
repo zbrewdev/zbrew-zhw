@@ -1,2 +1,25 @@
 #!/bin/sh
+#set -x
+out=$(whence zbrewfuncs >/dev/null)
+if [ $? -eq 0 ]; then
+	. zbrewfuncs
+else
+    	echo "zbrew tools need to be in your PATH"
+	exit 4
+fi
+
+mydir=$(callerdir ${0})
+props="${mydir}/../../zbrew/properties/zbrew.properties"
+. zbrewprops "${props}"
+if [ $? -gt 0 ]; then
+	echo "Internal Error. Unable to find ${props}" >&2
+	exit 4
+fi
+
+#Run REXX program and trim the trailing blanks
+out=`mvscmd --pgm=IRXJCL --args='HW' --sysexec="${ZBREW_HLQ}ZHW110.SZHWREXX" --systsin=dummy --systsprt=stdout --sysprint=stdout | awk '{ $1=$1; print}'`
+if [ "${out}" != 'Hello World' ]; then
+	echo "IVP of zhw110 failed. Unexpected output: ${out} received" >&2
+	exit 16
+fi
 exit 0

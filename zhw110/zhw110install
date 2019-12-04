@@ -1,2 +1,86 @@
 #!/bin/sh
+#set -x
+
+out=$(whence zbrewfuncs >/dev/null)
+if [ $? -eq 0 ]; then
+	. zbrewfuncs
+else
+	echo "zbrew tools need to be in your PATH"
+	exit 4
+fi
+
+crtds() {
+	list=$1
+	echo "$1" | awk '{ ds=$1; $1=""; attrs=$0; if ($ds != "") { rc=system("dtouch " attrs " " ds); if (rc > 0) { exit(rc); } } }'
+	exit $?
+}
+
+
+crtddef() {
+targetsmpcntl=\
+" SET   BDY(ZHW110T).
+ UCLIN.
+  ADD DDDEF(SZHWSM)
+      DA(${ZBREW_HLQ}ZHW110.REXX)
+      UNIT(SYSALLDA)
+      WAITFORDSN
+      SHR.
+ ENDUCL."
+
+distsmpcntl=\
+" SET   BDY(ZHW110D).
+ UCLIN.
+  ADD DDDEF(AZHWSM)
+      DA(${ZBREW_HLQ}ZHW110.AZHWREXX)
+      UNIT(SYSALLDA)
+      WAITFORDSN
+      SHR.
+      WAITFORDSN
+      SHR.
+ ENDUCL."
+
+	mvscmdauth --pgm=GIMSMP --smpcsi=${ZBREW_HLQ}ZHW110G.GLOBAL.CSI --smppts=${ZBREW_HLQ}ZHW110G.SMPPTS --smplog='*' --smpout='*' --smprpt='*' --smplist='*' --sysprint='*'  --smpcntl=stdin <<zzz
+${targetsmpcntl}
+zzz
+	rc=$?
+	if [ $rc -gt 0 ]; then
+		exit $rc
+	fi
+
+	mvscmdauth --pgm=GIMSMP --smpcsi=${ZBREW_HLQ}ZHW110G.GLOBAL.CSI --smplog='*' --smpout='*' --smprpt='*' --smplist='*' --sysprint='*' --smpcntl=stdin <<zzz
+${distsmpcntl}
+zzz
+	rc=$?
+	exit $rc
+}
+mydir=$(callerdir ${0})
+props="${mydir}/../../zbrew/properties/zbrew.properties"
+. zbrewprops "${props}"
+if [ $? -gt 0 ]; then
+        echo "Internal Error. Unable to find ${props}" >&2
+        exit 4
+fi     
+props="${mydir}/igy630install.properties"
+. zbrewprops ${props}
+
+ds="
+    	${ZBREW_HLQ}ZHW110.SZHWREXX -s1M
+"
+
+out=`crtds "${ds}"`
+rc=$?
+if [ $rc -gt 0 ]; then
+	echo "Dataset creation failed. Installation aborted"
+	exit $rc
+fi
+
+out=`crtddef`
+rc=$?
+if [ $rc -gt 0 ]; then
+	echo "SMP Data Definition failed. Installation aborted"
+	echo "$out"
+	exit $rc
+fi
+
 exit 0
+

@@ -22,8 +22,14 @@ if [ $# -ne 1 ]; then
 fi
 NTS="$1"
 
-sysin=${TMP}/$$.gimzip.sysin
 mydir=$(callerdir ${0})
+props="${mydir}/../../zbrew/properties/zbrew.properties"
+. zbrewprops "${props}"
+if [ $? -gt 0 ]; then
+        echo "Internal Error. Unable to find ${props}" >&2
+        exit 4
+fi
+sysin=${ZBREW_TMP}/$$.gimzip.sysin
 hlq="ZHW"
 smpmcs="${hlq}.ZHWZ110.MCS"
 smphld="${hlq}.ZHWZ110.HOLD"
@@ -81,7 +87,7 @@ dtouch -tseq ${sysut2}
 dtouch -tseq ${sysut3}
 dtouch -tseq ${sysut4}
 
-out=`mvscmdauth --pgm=gimzip --smpdir="${NTS}" --smpwkdir="${TMP}" --smpcpath="${SMPE_CLASSPATH}" --smpjhome="${SMPE_JAVAHOME}" --SYSUT2=${sysut2} --SYSUT3=${sysut3} --SYSUT4=${sysut4} --smpout=stdout --sysprint=stdout --sysin=${sysin}`
+out=`mvscmdauth --pgm=gimzip --smpdir="${NTS}" --smpwkdir="${ZBREW_TMP}" --smpcpath="${SMPE_CLASSPATH}" --smpjhome="${SMPE_JAVAHOME}" --SYSUT2=${sysut2} --SYSUT3=${sysut3} --SYSUT4=${sysut4} --smpout=stdout --sysprint=stdout --sysin=${sysin}`
 rc=$?
 
 if [ $rc -gt 0 ]; then 

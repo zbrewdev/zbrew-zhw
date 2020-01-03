@@ -17,7 +17,7 @@ if [ $? -gt 0 ]; then
 fi
 
 #Run REXX program and trim the trailing blanks
-out=`mvscmd --pgm=IRXJCL --args='HW' --sysexec="${ZBREW_HLQ}ZHW110.SZHWREXX" --systsin=dummy --systsprt=stdout --sysprint=stdout | awk '{ $1=$1; print}'`
+out=`mvscmd --pgm=IRXJCL --args='HW' --sysexec="${ZBREW_HLQ}ZHW110.SZHWSM" --systsin=dummy --systsprt=stdout --sysprint=stdout | awk '{ $1=$1; print}'`
 if [ "${out}" != 'Hello World' ]; then
 	echo "IVP of zhw110 failed. Unexpected output: ${out} received" >&2
 	exit 16

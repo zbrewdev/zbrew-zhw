@@ -1,0 +1,26 @@
+{ 
+	"software": [
+	{
+		"name":"ZHW110",
+		"datasets":[ 
+			{
+				"dsname":"SZHWSM",
+				"dstype":"PDSE",
+				"recfm":"FB",
+				"lrecl":80,
+				"primary":15, 
+				"secondary":2, 
+				"zones":["T"]
+			},
+			{
+				"dsname":"AZHWSM",
+				"dstype":"PDSE",
+				"recfm":"FB",
+				"lrecl":80,
+				"primary":15, 
+				"secondary":2, 
+				"zones":["D"]
+			}
+		]
+	}]
+}

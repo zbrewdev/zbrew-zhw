@@ -1,0 +1,9 @@
+{ 
+	"software": [{ 
+		"name":"ZHW110", 
+		"properties":{  
+			"zfsroot":"/zbrew/", 
+			"zfsdir":"", "leaves":"" 
+		 }
+	}] 
+}

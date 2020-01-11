@@ -1,9 +1,10 @@
 { 
 	"software": [{ 
 		"name":"ZHW110", 
-		"properties":{  
+		"install":{  
 			"zfsroot":"/zbrew/", 
-			"zfsdir":"", "leaves":"" 
+			"zfsdir":"usr/lpp/IBM/zhw/zhw110/", 
+			"leaves":"" 
 		 }
 	}] 
 }

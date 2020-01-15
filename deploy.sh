@@ -28,7 +28,9 @@ mkdir $1/zhw110/smprelf
 
 names=`cat zhw110.bom`
 code="${names}"
-
-cp -p ${code} $1
+ 
+for c in ${code}; do
+	cp -p ${c} $1/${c}
+done
 
 exit $? 

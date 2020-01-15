@@ -6,7 +6,7 @@ setjavaenv
 a2e() {
 	orig=$1
 	file=$(basename $1)
-	out=${TMP}/$$.$file.ebcdic
+	out=${ZBREW_TMP}/$$.$file.ebcdic
 
 	fromcp=`chtag -p ${orig} | awk '{ if ($2 == "untagged") { print "IBM-1047" } else { print $2; }}'`
 	tocp='IBM-1047'
@@ -23,18 +23,15 @@ fi
 NTS="$1"
 
 mydir=$(callerdir ${0})
-props="${mydir}/../../zbrew/properties/zbrew.properties"
-. zbrewprops "${props}"
-if [ $? -gt 0 ]; then
-        echo "Internal Error. Unable to find ${props}" >&2
-        exit 4
-fi
+props="${mydir}/../../zbrew/properties/zbrewprops.json"
+zbrewpropse zbrew config "${props}"
+
 sysin=${ZBREW_TMP}/$$.gimzip.sysin
-hlq="ZHW"
-smpmcs="${hlq}.ZHWZ110.MCS"
-smphld="${hlq}.ZHWZ110.HOLD"
-smppdsf="${hlq}.ZHWZ110.PDS"
-smprelf="${hlq}.ZHWZ110.F1"
+hlq="${ZBREW_HLQ}"
+smpmcs="${hlq}ZHWZ110.MCS"
+smphld="${hlq}ZHWZ110.HOLD"
+smppdsf="${hlq}ZHWZ110.PDS"
+smprelf="${hlq}ZHWZ110.F1"
 
 echo "
 <GIMZIP description=\"zbrew sample for testing\">
@@ -56,7 +53,7 @@ echo "
 </GIMZIP>
 " >${sysin}
 
-drm -f "${smprelf}" "${smpmcs}" "${smphld}"
+drm -f "${smppdsf}" "${smprelf}" "${smpmcs}" "${smphld}"
 dtouch -tpds "${smppdsf}"
 dtouch -tseq "${smprelf}"
 dtouch -tseq "${smpmcs}"
@@ -80,9 +77,9 @@ fi
 dcp "${hfssmpmcs}" "${smpmcs}"
 dcp "${hfssmphld}" "${smphld}"
 
-sysut2=`mvstmp ${hlq}`
-sysut3=`mvstmp ${hlq}`
-sysut4=`mvstmp ${hlq}`
+sysut2=`mvstmp ${hlq}S2`
+sysut3=`mvstmp ${hlq}S3`
+sysut4=`mvstmp ${hlq}S4`
 dtouch -tseq ${sysut2}
 dtouch -tseq ${sysut3}
 dtouch -tseq ${sysut4}

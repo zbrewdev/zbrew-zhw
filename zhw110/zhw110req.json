@@ -15,8 +15,10 @@
 					{
 					"fmid":"HLE77A0",
 					"description":"Language environment for z/OS 2.2",
-					"ptfs":	[ 
-						"UI50167","UI53807","UI53820","UI56511","UI61244"
+					"ptfs": [ 
+						"UI30573","UI31702","UI33265","UI43053","UI45429",
+						"UI43458","UI49699","UI53511","UI53889","UI54726",
+						"UI56507","UI61245","UI29282"
 					]
 					}
 				]
@@ -27,10 +29,8 @@
 					{
 					"fmid":"HLE77B0",
 					"description":"Language environment for z/OS 2.3",
-					"ptfs": [ 
-						"UI30573","UI31702","UI33265","UI43053","UI45429",
-						"UI43458","UI49699","UI53511","UI53889","UI54726",
-						"UI56507","UI61245","UI29282"
+					"ptfs":	[ 
+						"UI50167","UI53807","UI53820","UI56511","UI61244"
 					]
 					}
 				]

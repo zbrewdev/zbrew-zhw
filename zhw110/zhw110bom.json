@@ -8,7 +8,18 @@
                                 "dstype":"ZFS",
                                 "primary":10,
                                 "secondary":10,
-                                "zones":["T"]
+                                "zones":["T"],
+				"dddefpath":"",
+				"mountpnt":""
+                        },
+                        {
+                                "dsname":"SZHWHFS2",
+                                "dstype":"ZFS",
+                                "primary":10,
+                                "secondary":10,
+                                "zones":["T"],
+                                "dddefpath":"sepzfs/",
+                                "mountpnt":"sepzfs/"
                         },
 			{
 				"dsname":"SZHWSM",
@@ -27,7 +38,17 @@
 				"primary":15, 
 				"secondary":2, 
 				"zones":["D"]
-			}
+			},
+                        {
+                                "dsname":"AZHWHFS",
+                                "dstype":"PDSE",
+                                "recfm":"FB",
+                                "lrecl":80,
+                                "primary":15,
+                                "secondary":2,
+                                "zones":["D"]
+                        }
+
 		]
 	}]
 }

@@ -55,15 +55,19 @@ echo "
 
 drm -f "${smppdsf}" "${smprelf}" "${smpmcs}" "${smphld}"
 dtouch -tpds "${smppdsf}"
-dtouch -tseq "${smprelf}"
+dtouch -tpds "${smprelf}"
 dtouch -tseq "${smpmcs}"
 dtouch -tseq "${smphld}"
 
 hfssmprelf=`a2e ${mydir}/smprelf/hw.rexx`
+hfssmprelf1=`a2e ${mydir}/smprelf/hw1.rexx`
+hfssmprelf2=`a2e ${mydir}/smprelf/hw2.rexx`
 hfssmpmcs=`a2e ${mydir}/smpmcs/zhw110.mcs`
 hfssmphld=`a2e ${mydir}/smphold/zhw110.hold`
 
 dcp "${hfssmprelf}" "${smppdsf}(HW)"
+dcp "${hfssmprelf1}" "${smppdsf}(HW1)"
+dcp "${hfssmprelf2}" "${smppdsf}(HW2)"
 out=`mvscmd --pgm=iebcopy --dd1=${smppdsf} --dd2=${smprelf} --sysprint=stdout --sysin=stdin <<zzz
   COPY INDD=DD1,OUTDD=DD2
 zzz`

@@ -12,10 +12,27 @@ mydir=$(callerdir ${0})
 props="${mydir}/../../zbrew/properties/zbrewprops.json"
 zbrewpropse zbrew config "${props}"
 
+props="${mydir}/zhw110install.json"
+zbrewpropse zhw110 install "${props}"
+
 #Run REXX program and trim the trailing blanks
 out=`mvscmd --pgm=IRXJCL --args='HW' --sysexec="${ZBREW_HLQ}ZHW110.SZHWSM" --systsin=dummy --systsprt=stdout --sysprint=stdout | awk '{ $1=$1; print}'`
 if [ "${out}" != 'Hello World' ]; then
 	echo "IVP of zhw110 failed. Unexpected output: ${out} received" >&2
 	exit 16
 fi
+
+hw1=`${ZFSROOT}${ZFSDIR}HW1` 
+if [ "$hw1" != 'Hello World 1' ]; then
+	echo "IVP of zhw110 failed for HW1. Unexpected output: ${hw1} received" >&2
+        exit 16
+fi
+
+hw2=`${ZFSROOT}${ZFSDIR}sepzfs/HW2`
+if [ "$hw2" != 'Hello World 2' ]; then
+        echo "IVP of zhw110 failed for HW2. Unexpected output: ${hw2} received" >&2
+        exit 16
+fi
+
+
 exit 0

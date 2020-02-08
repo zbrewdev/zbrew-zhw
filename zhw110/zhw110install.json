@@ -4,7 +4,7 @@
 		"install":{  
 			"ZFSROOT":"/zbrew/", 
 			"ZFSDIR":"usr/lpp/IBM/zhw/zhw110/", 
-			"LEAVES":"hw" 
+			"LEAVES":"\"hw sepzfs\"" 
 		 }
 	}] 
 }

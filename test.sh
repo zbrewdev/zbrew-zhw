@@ -11,7 +11,6 @@
 # Run through each of the tests in the test bucket that aren't 
 # explicitly excluded, and return the highest error code
 #
-
 . zbrewfuncs
 mydir=$(callerdir ${0})
 
@@ -25,6 +24,8 @@ rm -f *.actual
 #
 export ZBREW_HLQ=ZHWT.
 export ZFSROOT=/zhwt/
+export ussname=zhw110
+export prefix=zhw
 
 if [ -z $1 ] ; then
 	tests=*.sh

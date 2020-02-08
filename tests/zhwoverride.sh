@@ -5,15 +5,28 @@
 . zbrewfuncs
 mydir=$(callerdir ${0})
 #set -x
+sw='zhw110'
+zosname=$(echo ${sw} | tr '[:lower:]' '[:upper:]');
+ussname=$(echo ${sw} | tr '[:upper:]' '[:lower:]');
+prefix=`echo "${ussname}" | awk '{ print substr($1, 0, 3) }'`
 
 ${mydir}/../../zbrew/build.sh # required if first ever run
 zbrewpropse zbrew config ${mydir}/../../zbrew/properties/zbrewprops.json
 zbrewpropse zhw110 install ${mydir}/../zhw110/zhw110install.json
+smpelibs="${mydir}/../../zbrew-${prefix}/${ussname}/${ussname}bom.json"
 
-# Clear up any jetsam from a previous run
-MOUNT="${ZFSROOT}${ZFSDIR}"
-unmount "${MOUNT}" 2>/dev/null 
-
+libs=`readbom ${zosname} <${smpelibs}`
+# Obtain list of ZFS and allocate/mount
+ds=`echo "${libs}" | awk -v pfx="${ZBREW_HLQ}${zosname}." '($2 == "ZFS") {print pfx""$1","}' | tr -d "\n"`
+zfscnt=`echo "${ds}" | awk -F, '{}END {print NF}'`
+while [ $zfscnt -ge 1 ]; 
+do
+        zfsds=`echo "${ds}" | awk -F, -v zfsv=$zfscnt '{print $zfsv}'`
+	if [ "$zfsds" != "" ]; then 
+        	unmount -f ${zfsds} 2>/dev/null
+	fi
+	zfscnt=`expr $zfscnt - 1`
+done
 
 drm -f "${ZBREW_HLQ}zhw*.*"
 
@@ -32,14 +45,14 @@ if [ $rc != 0 ]; then
 fi
 
 #
-# zhw only has one leaf (hw)
+# 
 #
-if [ "${LEAVES}" != "hw" ]; then
+if [ "${LEAVES}" != "hw sepzfs" ]; then
 	zbrewtest "zbrew configure of zhw110 has wrong value for LEAVES" "hw" "${LEAVES}"
 	exit 5
 fi
 
-leafdir="${MOUNT}${LEAVES}"
+leafdir="${ZFSROOT}${ZFSDIR}"
 if ! [ -d "${leafdir}" ]; then
 	zbrewtest "leaf directory not created" "${leafdir}" "${leafdir}"
 	exit 6

@@ -6,6 +6,7 @@
 mydir=$(callerdir ${0})
 #set -x
 
+${mydir}/../../zbrew/build.sh # required if first ever run
 zbrewpropse zbrew config ${mydir}/../../zbrew/properties/zbrewprops.json
 zbrewpropse zhw110 install ${mydir}/../zhw110/zhw110install.json
 

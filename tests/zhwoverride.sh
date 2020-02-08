@@ -5,21 +5,24 @@
 . zbrewfuncs
 mydir=$(callerdir ${0})
 #set -x
+sw='zhw110'
+zosname=$(echo ${sw} | tr '[:lower:]' '[:upper:]');
+ussname=$(echo ${sw} | tr '[:upper:]' '[:lower:]');
+prefix=`echo "${ussname}" | awk '{ print substr($1, 0, 3) }'`
 
 zbrewpropse zbrew config ${mydir}/../../zbrew/properties/zbrewprops.json
 zbrewpropse zhw110 install ${mydir}/../zhw110/zhw110install.json
 smpelibs="${mydir}/../../zbrew-${prefix}/${ussname}/${ussname}bom.json"
-ussname=$(echo ${ussname} | tr '[:lower:]' '[:upper:]')
 
-libs=`readbom ${ussname} <${smpelibs}`
+libs=`readbom ${zosname} <${smpelibs}`
 # Obtain list of ZFS and allocate/mount
-ds=`echo "${libs}" | awk -v pfx="${ZBREW_HLQ}${ussname}." '($2 == "ZFS") {print pfx""$1","}' | tr -d "\n"`
+ds=`echo "${libs}" | awk -v pfx="${ZBREW_HLQ}${zosname}." '($2 == "ZFS") {print pfx""$1","}' | tr -d "\n"`
 zfscnt=`echo "${ds}" | awk -F, '{}END {print NF}'`
 while [ $zfscnt -ge 1 ]; 
 do
         zfsds=`echo "${ds}" | awk -F, -v zfsv=$zfscnt '{print $zfsv}'`
-	if [ $zfsds != "" ]; then 
-        	unmount -f ${zfsds}
+	if [ "$zfsds" != "" ]; then 
+        	unmount -f ${zfsds} 2>/dev/null
 	fi
 	zfscnt=`expr $zfscnt - 1`
 done

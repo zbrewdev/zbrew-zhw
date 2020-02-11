@@ -34,8 +34,14 @@
 					]
 					}
 				]
-				}
-			]
+				},
+				{  
+				"relid":"CEE240",
+				"fmids": [
+					{
+					"fmid":"HLE77C0",
+					"description":"Language environment for z/OS 2.4",
+					"ptfs":	[ ]
 			}
 		],
 		"coreq":

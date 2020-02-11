@@ -96,7 +96,7 @@ if [ $rc -gt 0 ]; then
 	echo "${out}" >&2
 	exit $rc
 fi
-rm ${hfssmprelf} ${hfssmpmcs} ${hfssmphld} ${sysin}
+rm ${hfssmprelf} ${hfssmprelf1} ${hfssmprelf2} ${hfssmpmcs} ${hfssmphld} ${sysin}
 drm ${smppdsf} ${smprelf} ${smpmcs} ${smphld} ${sysut2} ${sysut3} ${sysut4}
 
 exit $rc

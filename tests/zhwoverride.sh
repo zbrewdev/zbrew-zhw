@@ -30,6 +30,19 @@ done
 
 drm -f "${ZBREW_HLQ}zhw*.*"
 
+zosinfo=`uname -rsvI`
+version=`echo ${zosinfo} | awk '{ print $3; }'`
+release=`echo ${zosinfo} | awk '{ print $2; }'`
+
+case ${release} in
+	'03.00' ) 
+		export CEE230_CSI='MVS.GLOBAL.CSI'
+		;;
+	'04.00' )
+		export CEE240_CSI='MVS.GLOBAL.CSI'
+		;;
+esac
+
 zbrew install zhw110
 rc=$?
 if [ $rc != 0 ]; then

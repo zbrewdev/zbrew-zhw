@@ -37,12 +37,44 @@ if [ $rc != 0 ]; then
 	exit 3
 fi
 
+
+zbrew -c install zhw110
+rc=$?
+if [ $rc != 0 ]; then
+        echo "zbrew install failed with rc:$rc" >&2
+        exit 5
+fi
+
+zbrew smpreceiveptf zhw110 ${ZBREW_HLQ}ZHWZ110.MCSPTF2  
+rc=$?
+if [ $rc != 0 ]; then
+        echo "zbrew receive ptf from z/os file failed with rc:$rc" >&2
+        exit 4
+fi
+
+zbrew update zhw110
+rc=$?
+if [ $rc != 0 ]; then
+        echo "zbrew update of zhw110 failed with rc:$rc" >&2
+        exit 4
+fi
+
+
 zbrew configure zhw110
 rc=$?
 if [ $rc != 0 ]; then
-	echo "zbrew configure failed with rc:$rc" >&2
-	exit 4
+        echo "zbrew configure failed with rc:$rc" >&2
+        exit 4
 fi
+
+
+zbrew uninstall zhw110
+rc=$?
+if [ $rc != 0 ]; then
+        echo "zbrew uninstall failed with rc:$rc" >&2
+        exit 6
+fi
+
 
 #
 # 

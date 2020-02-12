@@ -29,6 +29,8 @@ zbrewpropse zbrew config "${props}"
 sysin=${ZBREW_TMP}/$$.gimzip.sysin
 hlq="${ZBREW_HLQ}"
 smpmcs="${hlq}ZHWZ110.MCS"
+smpmcsptf1="${hlq}ZHWZ110.MCSPTF1"
+smpmcsptf2="${hlq}ZHWZ110.MCSPTF2"
 smphld="${hlq}ZHWZ110.HOLD"
 smppdsf="${hlq}ZHWZ110.PDS"
 smprelf="${hlq}ZHWZ110.F1"
@@ -38,6 +40,11 @@ echo "
   <FILEDEF name=\"${smpmcs}\"
            description=\"mcs file\"
            archid=\"SMPMCS\"
+           type=\"SMPPTFIN\">
+  </FILEDEF>
+  <FILEDEF name=\"${smpmcsptf1}\"
+           description=\"mcs ptf1\"
+           archid=\"SMPMCS.PTF1\"
            type=\"SMPPTFIN\">
   </FILEDEF>
   <FILEDEF name=\"${smphld}\"
@@ -53,16 +60,20 @@ echo "
 </GIMZIP>
 " >${sysin}
 
-drm -f "${smppdsf}" "${smprelf}" "${smpmcs}" "${smphld}"
+drm -f "${smppdsf}" "${smprelf}" "${smpmcs}" "${smpmcsptf1}" "${smpmcsptf2}" "${smphld}"
 dtouch -tpds "${smppdsf}"
 dtouch -tpds "${smprelf}"
 dtouch -tseq "${smpmcs}"
+dtouch -tseq "${smpmcsptf1}"
+dtouch -tseq "${smpmcsptf2}"
 dtouch -tseq "${smphld}"
 
 hfssmprelf=`a2e ${mydir}/smprelf/hw.rexx`
 hfssmprelf1=`a2e ${mydir}/smprelf/hw1.rexx`
 hfssmprelf2=`a2e ${mydir}/smprelf/hw2.rexx`
 hfssmpmcs=`a2e ${mydir}/smpmcs/zhw110.mcs`
+hfssmpmcsptf1=`a2e ${mydir}/smpmcs/zhw110ptf1.mcs`
+hfssmpmcsptf2=`a2e ${mydir}/smpmcs/zhw110ptf2.mcs`
 hfssmphld=`a2e ${mydir}/smphold/zhw110.hold`
 
 dcp "${hfssmprelf}" "${smppdsf}(HW)"
@@ -79,6 +90,8 @@ if [ $rc -gt 0 ]; then
 fi
 
 dcp "${hfssmpmcs}" "${smpmcs}"
+dcp "${hfssmpmcsptf1}" "${smpmcsptf1}"
+dcp "${hfssmpmcsptf2}" "${smpmcsptf2}"
 dcp "${hfssmphld}" "${smphld}"
 
 sysut2=`mvstmp ${hlq}S2`
@@ -96,7 +109,7 @@ if [ $rc -gt 0 ]; then
 	echo "${out}" >&2
 	exit $rc
 fi
-rm ${hfssmprelf} ${hfssmprelf1} ${hfssmprelf2} ${hfssmpmcs} ${hfssmphld} ${sysin}
-drm ${smppdsf} ${smprelf} ${smpmcs} ${smphld} ${sysut2} ${sysut3} ${sysut4}
+rm ${hfssmprelf} ${hfssmprelf1} ${hfssmprelf2} ${hfssmpmcs} ${hfssmpmcsptf1} ${hfssmpmcsptf2} ${hfssmphld} ${sysin}
+drm ${smppdsf} ${smprelf} ${smpmcs} ${smpmcsptf1} ${smphld} ${sysut2} ${sysut3} ${sysut4}
 
 exit $rc

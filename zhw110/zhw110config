@@ -18,28 +18,47 @@ zbrewpropse zhw110 install "${props}"
 #Run REXX program and trim the trailing blanks
 out=`mvscmd --pgm=IRXJCL --args='HW' --sysexec="${ZBREW_HLQ}ZHW110.SZHWSM" --systsin=dummy --systsprt=stdout --sysprint=stdout | awk '{ $1=$1; print}'`
 if [ "${out}" != 'Hello World' ]; then
-	echo "IVP of zhw110 failed. Unexpected output: ${out} received" >&2
-	exit 16
+	echo "IVP Test 1 of zhw110 failed. Unexpected output: ${out} received" >&2
+	rc=16
 else
 	echo "IVP Test 1 passed. Output generated: ${out}">&2
 fi
 
+out=`mvscmd --pgm=IRXJCL --args='HW4' --sysexec="${ZBREW_HLQ}ZHW110.SZHWSM" --systsin=dummy --systsprt=stdout --sysprint=stdout | awk '{ $1=$1; print}'`
+if [ "${out}" != 'HELLO CRAZY WORLD' ]; then
+        echo "IVP Test 2 of zhw110 failed. Unexpected output: ${out} received" >&2
+	echo "Expect this Test to FAIL if you have not run zbrew smpreceiveptf zhw110 'ZBREW.ZHWZ110.MCSPTF2'" >&2
+	echo "AND zbrew update zhw110" >&2
+	rc=16
+else
+        echo "IVP Test 2 passed. Output generated: ${out}">&2
+fi
+
+
+out=`mvscmd --pgm=IRXJCL --args='HW5' --sysexec="${ZBREW_HLQ}ZHW110.SZHWSM" --systsin=dummy --systsprt=stdout --sysprint=stdout | awk '{ $1=$1; print}'`
+if [ "${out}" != 'HELLO SUPER BAT-CRAP CRAZY WORLD' ]; then
+        echo "IVP TEST 3 of zhw110 failed. Unexpected output: ${out} received" >&2
+	echo "Expect this Test to FAIL if you have not run zbrew update zhw110" >&2
+	rc=8
+else
+        echo "IVP Test 3 passed. Output generated: ${out}">&2
+fi
 
 hw1=`${ZFSROOT}${ZFSDIR}HW1` 
 if [ "$hw1" != 'Hello World 1' ]; then
-	echo "IVP of zhw110 failed for HW1. Unexpected output: ${hw1} received" >&2
-        exit 16
+	echo "IVP Test 4 of zhw110 failed for HW1. Unexpected output: ${hw1} received" >&2
+        rc=16
 else
-	echo "IVP Test 2 passed. Output generated: ${hw1}" >&2
+	echo "IVP Test 4 passed. Output generated: ${hw1}" >&2
 fi
 
 hw2=`${ZFSROOT}${ZFSDIR}sepzfs/HW2`
 if [ "$hw2" != 'Hello World 2' ]; then
-        echo "IVP of zhw110 failed for HW2. Unexpected output: ${hw2} received" >&2
-        exit 16
+        echo "IVP Test 5 of zhw110 failed for HW2. Unexpected output: ${hw2} received" >&2
+        rc=16
 else
-	echo "IVP Test 3 passed. Output generated: ${hw2}" >&2
+	echo "IVP Test 5 passed. Output generated: ${hw2}" >&2
 fi
 
 
-exit 0
+exit $rc

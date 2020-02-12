@@ -20,18 +20,25 @@ out=`mvscmd --pgm=IRXJCL --args='HW' --sysexec="${ZBREW_HLQ}ZHW110.SZHWSM" --sys
 if [ "${out}" != 'Hello World' ]; then
 	echo "IVP of zhw110 failed. Unexpected output: ${out} received" >&2
 	exit 16
+else
+	echo "IVP Test 1 passed. Output generated: ${out}">&2
 fi
+
 
 hw1=`${ZFSROOT}${ZFSDIR}HW1` 
 if [ "$hw1" != 'Hello World 1' ]; then
 	echo "IVP of zhw110 failed for HW1. Unexpected output: ${hw1} received" >&2
         exit 16
+else
+	echo "IVP Test 2 passed. Output generated: ${hw1}" >&2
 fi
 
 hw2=`${ZFSROOT}${ZFSDIR}sepzfs/HW2`
 if [ "$hw2" != 'Hello World 2' ]; then
         echo "IVP of zhw110 failed for HW2. Unexpected output: ${hw2} received" >&2
         exit 16
+else
+	echo "IVP Test 3 passed. Output generated: ${hw2}" >&2
 fi
 
 

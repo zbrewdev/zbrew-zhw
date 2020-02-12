@@ -1,0 +1,10 @@
+++ PTF(AZHW002) .         
+++ VER (Z038)             
+   FMID(ZHWZ110).         
+++SAMP (HW5)              
+   DISTLIB(AZHWSM)        
+   SYSLIB(SZHWSM).        
+/* REXX */                
+SAY "HELLO SUPER BAT-CRAP CRAZY WORLD"   
+EXIT                      
+

@@ -1,0 +1,10 @@
+++ PTF(AZHW001) .         
+++ VER (Z038)             
+   FMID(ZHWZ110).         
+++SAMP (HW4)              
+   DISTLIB(AZHWSM)        
+   SYSLIB(SZHWSM).        
+/* REXX */                
+SAY "HELLO CRAZY WORLD"   
+EXIT                      
+

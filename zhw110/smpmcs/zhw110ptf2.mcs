@@ -5,6 +5,6 @@
    DISTLIB(AZHWSM)        
    SYSLIB(SZHWSM).        
 /* REXX */                
-SAY "HELLO SUPER BAT-CRAP CRAZY WORLD"   
+SAY "HELLO SUPER CRAZY WORLD"   
 EXIT                      
 

@@ -9,8 +9,9 @@
                                 "primary":10,
                                 "secondary":10,
                                 "zones":["T"],
-				"dddefpath":"",
-				"mountpnt":""
+				"dddefpath":"usr/lpp/IBM/zhw/zhw110/",
+				"mountpnt":"usr/lpp/IBM/zhw/zhw110/",
+                                "leaves":"hw,sepzfs"
                         },
                         {
                                 "dsname":"SZHWHFS2",
@@ -18,8 +19,9 @@
                                 "primary":10,
                                 "secondary":10,
                                 "zones":["T"],
-                                "dddefpath":"sepzfs/",
-                                "mountpnt":"sepzfs/"
+                                "dddefpath":"usr/lpp/IBM/zhw/zhw110/sepzfs/",
+                                "mountpnt":"usr/lpp/IBM/zhw/zhw110/sepzfs/",
+				"leaves":""
                         },
 			{
 				"dsname":"SZHWSM",

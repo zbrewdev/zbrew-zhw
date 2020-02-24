@@ -12,7 +12,6 @@ prefix=`echo "${ussname}" | awk '{ print substr($1, 0, 3) }'`
 
 ${mydir}/../../zbrew/build.sh # required if first ever run
 zbrewpropse zbrew config ${mydir}/../../zbrew/properties/zbrewprops.json
-zbrewpropse zhw110 install ${mydir}/../zhw110/zhw110install.json
 smpelibs="${mydir}/../../zbrew-${prefix}/${ussname}/${ussname}bom.json"
 
 libs=`readbom ${zosname} <${smpelibs}`
@@ -88,19 +87,5 @@ if [ $rc != 0 ]; then
         exit 6
 fi
 
-
-#
-# 
-#
-if [ "${LEAVES}" != "hw sepzfs" ]; then
-	zbrewtest "zbrew configure of zhw110 has wrong value for LEAVES" "hw" "${LEAVES}"
-	exit 5
-fi
-
-leafdir="${ZFSROOT}${ZFSDIR}"
-if ! [ -d "${leafdir}" ]; then
-	zbrewtest "leaf directory not created" "${leafdir}" "${leafdir}"
-	exit 6
-fi
 
 exit 0

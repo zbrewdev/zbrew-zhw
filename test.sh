@@ -23,7 +23,7 @@ rm -f *.actual
 # Override the ZBREW_HLQ to ensure test datasets go to ZHWT instead of ZBREW
 #
 export ZBREW_HLQ=ZHWT.
-export ZFSROOT=/zhwt/
+export ZBREW_ZFSROOT=/zhwt/
 export ussname=zhw110
 export prefix=zhw
 

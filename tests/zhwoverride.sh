@@ -57,7 +57,7 @@ if [ $rc != 0 ]; then
         exit 5
 fi
 
-zbrew smpreceiveptf zhw110 ${ZBREW_HLQ}ZHWZ110.MCSPTF2  
+zbrew smpreceiveptf zhw110 MCSPTF2  
 rc=$?
 if [ $rc != 0 ]; then
         echo "zbrew receive ptf from z/os file failed with rc:$rc" >&2

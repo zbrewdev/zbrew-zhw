@@ -10,7 +10,7 @@
 			"release":
 			[
 				{
-				"relid":"CEE220",
+				"relid":"ZOS220",
 				"fmids": [
 					{
 					"fmid":"HLE77A0",
@@ -24,7 +24,7 @@
 				]
 				},
 				{  
-				"relid":"CEE230",
+				"relid":"ZOS230",
 				"fmids": [
 					{
 					"fmid":"HLE77B0",
@@ -36,12 +36,14 @@
 				]
 				},
 				{  
-				"relid":"CEE240",
+				"relid":"ZOS240",
 				"fmids": [
 					{
 					"fmid":"HLE77C0",
 					"description":"Language environment for z/OS 2.4",
-					"ptfs":	[]
+					"ptfs":	[
+						"HLE77C0"
+					]
 					}
 				]
 				}

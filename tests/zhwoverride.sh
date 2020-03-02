@@ -14,7 +14,7 @@ ${mydir}/../../zbrew/build.sh # required if first ever run
 zbrewpropse zbrew config ${mydir}/../../zbrew/properties/zbrewprops.json
 smpelibs="${mydir}/../../zbrew-${prefix}/${ussname}/${ussname}bom.json"
 
-libs=`readbom ${zosname} <${smpelibs}`
+libs=`readbom ${zosname} bomfiles <${smpelibs}`
 # Obtain list of ZFS and allocate/mount
 ds=`echo "${libs}" | awk -v pfx="${ZBREW_HLQ}${zosname}." '($2 == "ZFS") {print pfx""$1","}' | tr -d "\n"`
 zfscnt=`echo "${ds}" | awk -F, '{}END {print NF}'`
@@ -35,10 +35,10 @@ release=`echo ${zosinfo} | awk '{ print $2; }'`
 
 case ${release} in
 	'03.00' ) 
-		export ZBREW_CEE230_CSI='MVS.GLOBAL.CSI'
+		export ZBREW_ZOS230_CSI='MVS.GLOBAL.CSI'
 		;;
 	'04.00' )
-		export ZBREW_CEE240_CSI='MVS.GLOBAL.CSI'
+		export ZBREW_ZOS240_CSI='MVS.GLOBAL.CSI'
 		;;
 esac
 

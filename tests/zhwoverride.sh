@@ -4,19 +4,20 @@
 #
 . zbrewfuncs
 mydir=$(callerdir ${0})
+props="${mydir}/../../zbrew/zbrewglobalprops.json"
+zbrewpropse zbrew config "${props}"
+
 #set -x
 sw='zhw110'
 zosname=$(echo ${sw} | tr '[:lower:]' '[:upper:]');
 ussname=$(echo ${sw} | tr '[:upper:]' '[:lower:]');
 prefix=`echo "${ussname}" | awk '{ print substr($1, 0, 3) }'`
 
-${mydir}/../../zbrew/build.sh # required if first ever run
-zbrewpropse zbrew config ${mydir}/../../zbrew/properties/zbrewprops.json
 smpelibs="${mydir}/../../zbrew-${prefix}/${ussname}/${ussname}bom.json"
 
 libs=`readbom ${zosname} bomfiles <${smpelibs}`
 # Obtain list of ZFS and allocate/mount
-ds=`echo "${libs}" | awk -v pfx="${ZBREW_HLQ}${zosname}." '($2 == "ZFS") {print pfx""$1","}' | tr -d "\n"`
+ds=`echo "${libs}" | awk -v pfx="${ZBREW_SRC_HLQ}${zosname}." '($2 == "ZFS") {print pfx""$1","}' | tr -d "\n"`
 zfscnt=`echo "${ds}" | awk -F, '{}END {print NF}'`
 while [ $zfscnt -ge 1 ]; 
 do
@@ -27,7 +28,7 @@ do
 	zfscnt=`expr $zfscnt - 1`
 done
 
-drm -f "${ZBREW_HLQ}zhw*.*"
+drm -f "${ZBREW_SRC_HLQ}zhw*.*"
 
 zosinfo=`uname -rsvI`
 version=`echo ${zosinfo} | awk '{ print $3; }'`

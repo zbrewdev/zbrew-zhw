@@ -9,11 +9,8 @@ else
 fi
 
 mydir=$(callerdir ${0})
-props="${mydir}/../../zbrew/properties/zbrewprops.json"
+props="${mydir}/../../zbrew/zbrewglobalprops.json"
 zbrewpropse zbrew config "${props}"
-
-props=$(callerdir "$0")"/../../zbrew/properties/globalprops.json"
-zbrewpropse zbrew global ${props}
 
 rptf=`zbrew smpreceiveptf zhw110 mcsptf2` 2>/dev/null
 
@@ -21,7 +18,7 @@ updt=`zbrew update zhw110` 2>/dev/null
 
 
 #Run REXX program and trim the trailing blanks
-out=`mvscmd --pgm=IRXJCL --args='HW' --sysexec="${ZBREW_HLQ}ZHW110.SZHWSM" --systsin=dummy --systsprt=stdout --sysprint=stdout | awk '{ $1=$1; print}'`
+out=`mvscmd --pgm=IRXJCL --args='HW' --sysexec="${ZBREW_SRC_HLQ}ZHW110.SZHWSM" --systsin=dummy --systsprt=stdout --sysprint=stdout | awk '{ $1=$1; print}'`
 if [ "${out}" != 'Hello World' ]; then
 	echo "IVP Test 1 of 5 for zhw110 failed. Unexpected output: ${out} received" >&2
 	exit 16
@@ -29,7 +26,7 @@ else
 	echo "IVP Test 1 of 5 passed. Output generated: ${out}">&2
 fi
 
-hw1=`${ZBREW_ZFSROOT}usr/lpp/IBM/zhw/zhw110/HW1` 
+hw1=`${ZBREW_SRC_ZFSROOT}usr/lpp/IBM/zhw/zhw110/HW1` 
 if [ "$hw1" != 'Hello World 1' ]; then
 	echo "IVP Test 2 of 5 for zhw110 failed for HW1. Unexpected output: ${hw1} received" >&2
         exit 16
@@ -37,7 +34,7 @@ else
 	echo "IVP Test 2 of 5 passed. Output generated: ${hw1}" >&2
 fi
 
-hw2=`${ZBREW_ZFSROOT}usr/lpp/IBM/zhw/zhw110/sepzfs/HW2`
+hw2=`${ZBREW_SRC_ZFSROOT}usr/lpp/IBM/zhw/zhw110/sepzfs/HW2`
 if [ "$hw2" != 'Hello World 2' ]; then
         echo "IVP Test 3 of 5 for zhw110 failed for HW2. Unexpected output: ${hw2} received" >&2
         exit 16
@@ -46,7 +43,7 @@ else
 fi
 
 
-out=`mvscmd --pgm=IRXJCL --args='HW4' --sysexec="${ZBREW_HLQ}ZHW110.SZHWSM" --systsin=dummy --systsprt=stdout --sysprint=stdout | awk '{ $1=$1; print}'`
+out=`mvscmd --pgm=IRXJCL --args='HW4' --sysexec="${ZBREW_SRC_HLQ}ZHW110.SZHWSM" --systsin=dummy --systsprt=stdout --sysprint=stdout | awk '{ $1=$1; print}'`
 if [ "${out}" != 'HELLO CRAZY WORLD' ]; then
         echo "IVP Test 4 of 5 for zhw110 failed. Unexpected output: ${out} received" >&2
         echo "Expect this Test to FAIL if you have not run zbrew update zhw110" >&2
@@ -56,7 +53,7 @@ else
 fi
 
 
-out=`mvscmd --pgm=IRXJCL --args='HW5' --sysexec="${ZBREW_HLQ}ZHW110.SZHWSM" --systsin=dummy --systsprt=stdout --sysprint=stdout | awk '{ $1=$1; print}'`
+out=`mvscmd --pgm=IRXJCL --args='HW5' --sysexec="${ZBREW_SRC_HLQ}ZHW110.SZHWSM" --systsin=dummy --systsprt=stdout --sysprint=stdout | awk '{ $1=$1; print}'`
 if [ "${out}" != 'HELLO SUPER CRAZY WORLD' ]; then
         echo "IVP TEST 5 of 5 for zhw110 failed. Unexpected output: ${out} received" >&2
         echo "Expect this Test to FAIL if you have not run zbrew smpreceiveptf zhw110 MCSPTF2" >&2

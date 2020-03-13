@@ -13,7 +13,7 @@ zosname=$(echo ${sw} | tr '[:lower:]' '[:upper:]');
 ussname=$(echo ${sw} | tr '[:upper:]' '[:lower:]');
 prefix=`echo "${ussname}" | awk '{ print substr($1, 0, 3) }'`
 
-smpelibs="${mydir}/../../zbrew-${prefix}/${ussname}/${ussname}bom.json"
+smpelibs="${ZBREW_WORKROOT}/zbrew-${prefix}/${ussname}/${ussname}bom.json"
 
 libs=`readbom ${zosname} bomfiles <${smpelibs}`
 # Obtain list of ZFS and allocate/mount

@@ -2,9 +2,9 @@
 #
 # Install zhw with a few overrides and then ensure the zFS files are laid down
 #
+#set -x
 . zbrewsetenv
 
-set -x
 sw='zhw110'
 
 zosinfo=`uname -rsvI`

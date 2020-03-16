@@ -21,7 +21,6 @@ rm -f *.actual
 #
 # Override the ZBREW_SRC_HLQ to ensure test datasets go to ZHWT instead of ZBREW
 #
-set -x
 export ZBREW_SRC_HLQ=ZBREWVS.
 export ZBREW_SRC_ZFSROOT=/zbrew/zhwvs/
 export ZBREW_TGT_HLQ=ZBREWVT.

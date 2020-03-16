@@ -11,8 +11,7 @@
 # Run through each of the tests in the test bucket that aren't 
 # explicitly excluded, and return the highest error code
 #
-. zbrewfuncs
-mydir=$(callerdir ${0})
+. zbrewsetenv
 
 cd ${mydir}/tests
 
@@ -22,10 +21,10 @@ rm -f *.actual
 #
 # Override the ZBREW_SRC_HLQ to ensure test datasets go to ZHWT instead of ZBREW
 #
-export ZBREW_SRC_HLQ=ZHWV.
-export ZBREW_SRC_ZFSROOT=${ZBREW_TMP}/zhwv/
-export ussname=zhw110
-export prefix=zhw
+export ZBREW_SRC_HLQ=ZBREWVS.
+export ZBREW_SRC_ZFSROOT=/zbrew/zhwvs/
+export ZBREW_TGT_HLQ=ZBREWVT.
+export ZBREW_TGT_ZFSROOT=/zbrew/zhwvt/
 
 if [ -z $1 ] ; then
 	tests=*.sh
@@ -58,15 +57,9 @@ for test in ${tests}; do
 			rc=$?
 		else 
 
-			${test} ${parms} > /dev/null 2>/dev/null
+			${test} ${parms}  # > /dev/null 2>/dev/null
 			rc=$?
 		fi 
-		if [ ${rc} -gt ${maxrc} ]; then
-			${test} -dv ${parms}
-			echo "Failed test ${name}"
-			exit $rc
-            maxrc=${rc}
-		fi
 	fi
 done
 exit ${maxrc} 

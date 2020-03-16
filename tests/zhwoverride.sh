@@ -2,8 +2,8 @@
 #
 # Install zhw with a few overrides and then ensure the zFS files are laid down
 #
-#set -x
 . zbrewsetenv
+#set -x
 
 sw='zhw110'
 
@@ -20,8 +20,6 @@ case ${release} in
 		;;
 esac
 
-dls 'zbrewvs.*'
-
 zbrew install zhw110
 rc=$?
 if [ $rc != 0 ]; then
@@ -29,15 +27,12 @@ if [ $rc != 0 ]; then
 	exit 2
 fi
 
-dls 'zbrewvs.*'
-
 zbrew -c install zhw110
 rc=$?
 if [ $rc != 0 ]; then
         echo "zbrew install failed with rc:$rc" >&2
         exit 3
 fi
-dls 'zbrewvt.*'
 
 zbrew smpreceiveptf zhw110 MCSPTF2  
 rc=$?
@@ -45,7 +40,6 @@ if [ $rc != 0 ]; then
         echo "zbrew receive ptf from z/os file failed with rc:$rc" >&2
         exit 4
 fi
-dls 'zbrewvt.*'
 
 zbrew update zhw110
 rc=$?
@@ -53,7 +47,6 @@ if [ $rc != 0 ]; then
         echo "zbrew update of zhw110 failed with rc:$rc" >&2
         exit 5
 fi
-dls 'zbrewvt.*'
 
 zbrew configure zhw110
 rc=$?
@@ -61,7 +54,6 @@ if [ $rc != 0 ]; then
         echo "zbrew configure failed with rc:$rc" >&2
         exit 6
 fi
-dls 'zbrewvt.*'
 
 zbrew deconfigure zhw110
 rc=$?

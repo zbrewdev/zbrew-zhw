@@ -20,17 +20,10 @@ case ${release} in
 		;;
 esac
 
-zbrew install zhw110
-rc=$?
-if [ $rc != 0 ]; then
-	echo "zbrew install failed with rc:$rc" >&2
-	exit 2
-fi
-
 zbrew -c install zhw110
 rc=$?
 if [ $rc != 0 ]; then
-        echo "zbrew install failed with rc:$rc" >&2
+        echo "zbrew install clean failed with rc:$rc" >&2
         exit 3
 fi
 

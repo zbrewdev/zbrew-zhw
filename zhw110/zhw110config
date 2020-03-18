@@ -2,9 +2,17 @@
 #set -x
 . zbrewsetenv
 
-rptf=`zbrew smpreceiveptf zhw110 mcsptf2` 2>/dev/null
-
-updt=`zbrew update zhw110` 2>/dev/null
+zbrew smpreceiveptf zhw110 mcsptf2 
+rc=$?
+if [ $rc -gt 0 ]; then
+	echo "IVP SMPRECEIVEPTF failed with rc:$rc" >&2
+	exit $rc
+fi
+zbrew update zhw110
+if [ $rc -gt 0 ]; then
+	echo "IVP UPDATE failed with rc:$rc" >&2
+	exit $rc
+fi
 
 
 #Run REXX program and trim the trailing blanks

@@ -20,6 +20,13 @@ case ${release} in
 		;;
 esac
 
+zbrew deconfigure zhw110
+rc=$?
+if [ $rc != 0 ]; then
+        echo "zbrew deconfigure failed with rc:$rc" >&2
+        exit 3
+fi
+
 zbrew -c install zhw110
 rc=$?
 if [ $rc != 0 ]; then
@@ -43,7 +50,7 @@ fi
 
 zbrew configure zhw110
 rc=$?
-if [ $rc != 0 ]; then
+if [ $rc -gt 4 ]; then
         echo "zbrew configure failed with rc:$rc" >&2
         exit 6
 fi

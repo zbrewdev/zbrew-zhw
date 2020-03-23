@@ -2,18 +2,6 @@
 #set -x
 . zbrewsetenv
 
-zbrew smpreceiveptf zhw110 mcsptf2 
-rc=$?
-if [ $rc -gt 4 ]; then
-	echo "IVP SMPRECEIVEPTF failed with rc:$rc" >&2
-	exit $rc
-fi
-zbrew update zhw110
-if [ $rc -gt 0 ]; then
-	echo "IVP UPDATE failed with rc:$rc" >&2
-	exit $rc
-fi
-
 
 #Run REXX program and trim the trailing blanks
 out=`mvscmd --pgm=IRXJCL --args='HW' --sysexec="${ZBREW_TGT_HLQ}ZHW110.SZHWSM" --systsin=dummy --systsprt=stdout --sysprint=stdout | awk '{ $1=$1; print}'`

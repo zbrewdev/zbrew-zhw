@@ -12,7 +12,15 @@
 # explicitly excluded, and return the highest error code
 #
 . zbrewsetenv
-
 . zbrewtestfuncs
+
+#
+# Override the ZBREW_SRC_HLQ to ensure test datasets go to ZHWT instead of ZBREW
+#
+export ZBREW_SRC_HLQ=ZBREWVS.
+export ZBREW_SRC_ZFSROOT=/zbrew/zhwvs/
+export ZBREW_TGT_HLQ=ZBREWVT.
+export ZBREW_TGT_ZFSROOT=/zbrew/zhwvt/
+
 runtests "${mydir}/tests" "$1"
 exit $?

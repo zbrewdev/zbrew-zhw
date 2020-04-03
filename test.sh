@@ -12,6 +12,8 @@
 # explicitly excluded, and return the highest error code
 #
 . zbrewsetenv
+
+export PATH=$ZBREW_ROOT/testtools:$PATH
 . zbrewtestfuncs
 
 #
